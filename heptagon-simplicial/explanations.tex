@@ -1,0 +1,314 @@
+\documentclass[12pt]{article}
+
+\usepackage{hyperref}
+
+\usepackage{amsfonts, amsmath, amssymb, amsthm}
+% \DeclareFontFamily{U}{mathc}{}
+% \DeclareMathAlphabet{\mathscr}{U}{mathc}{m}{it}
+
+\usepackage{a4}
+
+\usepackage{blkarray}
+
+% \usepackage{graphicx}
+
+ \usepackage{showkeys}
+
+ \usepackage{xcolor}
+
+ \definecolor{Refkey}{RGB}{255,127,0}
+ \definecolor{Labelkey}{RGB}{127,0,255}
+ \makeatletter 
+  \def\SK@refcolor{\color{Refkey}}
+  \def\SK@labelcolor{\color{Labelkey}}
+ \makeatother
+
+  \definecolor{mdg}{RGB}{0,177,0} % {0,127,0}
+  \definecolor{mdb}{RGB}{0,0,191}
+  \definecolor{mddb}{RGB}{0,0,91}
+  \definecolor{mdy}{RGB}{255,69,0} 
+  \definecolor{gray}{RGB}{99,99,99} 
+
+\usepackage{upgreek}
+% \usepackage{tikz-cd}
+
+\DeclareMathOperator{\const}{const}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\characteristic}{char}
+
+\renewcommand{\theenumi}{(\roman{enumi})}
+\renewcommand{\labelenumi}{{\rm\theenumi}}
+
+% \newcommand{\tildetimes}{\mathbin{\widetilde{\times}}}
+% \newcommand{\strutik}{\vrule height 2.6ex depth 1ex width 0pt}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{cnj}{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{convention}{Convention}
+\newtheorem{ir}{Important Remark}
+\newtheorem{example}{Example}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\renewcommand\labelitemi{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\author{Igor G. Korepanov}
+
+\title{Explanations of the calculations for the paper ``Heptagon relations from a simplicial 3-cocycle, and their cohomology''}
+
+\date{}
+
+\begin{document}
+
+\sloppy
+
+\maketitle
+
+
+
+\section{Preliminaries}\label{s:4f}
+
+\subsection{Technical: package \texttt{PL}}
+
+The calculations have been done in \href{https://www.gap-system.org/}{GAP} computer algebra system, with our additional package \texttt{PL} that should be downloaded from \href{https://sourceforge.net/projects/plgap/}{https://sourceforge.net/projects/plgap/} and installed.
+
+\begin{remark}
+ \texttt{PL} package is still at the ``pre-alpha'' state. The part of it used in the present work is, however, fully functional and well tested.
+\end{remark}
+
+\subsection{A basis in permitted colorings of one 4-face, and coordinates of coboundary-induced colorings in that basis}
+
+Let $\omega$ be a simplicial 3-cocycle given on some~$\Delta^4$, satisfying
+\begin{equation}\label{onv}.
+ \omega _{ijkl} \quad \text{for any 3-face } ijkl.
+\end{equation}
+The colors of~$\Delta^4 \subset \Delta^m$ belong, by definition, to the \emph{three}-dimen\-sional $F$-linear space~$F^3$, identified below with the space~$V_{\Delta^4}$ consisting of 3-cocycles~$\nu$ on~$\Delta^4$ taken \emph{to within adding a multiple of~$\omega$} (restricted to~$\Delta^4$). This means that we have a chosen basis in each~$V_{\Delta^4}$, that is, for any~$\vec p_4 = \omega|_{\Delta^4}$. Note that any specific choice of these bases does not affect our theoretical constructions; convenient bases must be, though, specified for calculations.
+
+There is a remarkable symmetric bilinear form on~$V_{\Delta^4}$. Let $\nu, \eta$ be two 3-cocycles; we make first from them 3-cochain~$\mu$ as follows:
+\begin{equation}\label{mu}
+\mu _{ijkl} \stackrel{\mathrm{def}}{=} \frac{\nu _{ijkl}\eta _{ijkl}}{\omega _{ijkl}},
+\end{equation}
+and then define the bilinear form as the value on~$\Delta^4 = ijklm$ of its simplicial \emph{coboundary}:
+\begin{equation}\label{bf4}
+Q_{\Delta^4}(\nu,\eta) \stackrel{\mathrm{def}}{=} (\delta \mu)( \Delta^4 ) = \frac{\nu _{jklm}\,\eta _{jklm}}{\omega _{jklm}} - \dots + \frac{\nu _{ijkl}\,\eta _{ijkl}}{\omega _{ijkl}}
+\end{equation}
+
+\begin{proposition}\label{p:Q}
+$Q_{\Delta^4}(\nu,\eta)$ depends actually only on the equivalence classes of $\nu$ and~$\eta$ modulo~$\omega$, both belonging to~$V_{\Delta^4}$.
+\end{proposition}
+
+\begin{proof}
+This follows from the fact that $Q_{\Delta^4}(\nu,\eta)$ clearly vanishes if either $\nu$ or~$\eta$ is proportional to~$\omega$.
+\end{proof}
+
+We will take the liberty of denoting as $\delta (ijk)$ the coboundary of the simplicial 2-cochain taking value $1\in F$ on triangle~$ijk$ and zero on other triangles. For example, within 4-simplex $\Delta^4 = 12345$, it means that $\delta (234)$ takes value $1\in F$ on tetrahedron~$1234$, value $-1\in F$ on tetrahedron~$2345$, and zero on other tetrahedra. We call such colorings corresponding to cocycles $\nu = \delta (ijk)$ \emph{triangle vectors}. Surely, \emph{any} simplicial 3-cocycle~$\nu$ on~$\Delta^4$ can be represented (and not uniquely) as a linear combination of triangle vectors.
+
+Bilinear form~$Q_{\Delta^4}$ provides an elegant way of introducing \emph{coordinates} in our linear space~$V_{\Delta^4}$ of colors of~$\Delta^4$. For instance, here are the coordinates of triangle vectors that we used in our actual calculations, on the example of pentachoron $\Delta^4 = 12345$. We chose them to be proportional to $Q_{\Delta^4}\bigl(\nu,\delta(s)\bigr)$, taking three triangles for~$s$, namely $s=345$, $s=125$ and $s=123$ (we write simply~$Q$ instead of~$Q_{12345}$ in~\eqref{v12345} below):
+\begin{equation}\label{v12345}
+   \renewcommand{\arraystretch}{1.25}
+  \begin{blockarray}{cccc}  
+    \text{Cocycle }\nu \qquad & \BAmulticolumn{3}{c}{ \begin{matrix}{\text{Three coordinates}} \\[-1ex]
+                      \text{of the corresponding coloring of } \Delta^4 = 12345 \end{matrix} }  \\
+    \noalign{\smallskip}
+    \begin{block}{cccc}
+           & \begin{matrix} -Q\bigl(\nu,\delta(345)\bigr)\\[-1ex] \cdot\, \omega _{1345}\, \omega _{2345} \end{matrix} 
+           & \begin{matrix} -Q\bigl(\nu,\delta(125)\bigr)\\[-1ex] \cdot\, \omega _{1235}\, \omega _{1245} \end{matrix} 
+           & \begin{matrix} -Q\bigl(\nu,\delta(123)\bigr)\\[-1ex] \cdot\, \omega _{1234}\, \omega _{1235} \end{matrix}    \\
+    \end{block}
+    \noalign{\smallskip}
+    \begin{block}{c(ccc)}
+\delta(123) &       0                        & \omega _{1245}                & \omega _{1234}-\omega _{1235} \\
+\delta(124) &       0                        & -\omega _{1235}               & \omega _{1235}                \\
+\delta(125) &       0                        & \omega _{1235}-\omega _{1245} & -\omega _{1234}               \\
+\delta(134) & \omega _{2345}                 &          0                    & -\omega _{1235}               \\
+\delta(135) & -\omega _{2345}                & \omega _{1245}                & \omega _{1234}                \\
+\delta(145) & \omega _{2345}                 & -\omega _{1235}               &             0                 \\
+\delta(234) & -\omega _{1345}                &          0                    & \omega _{1235}                \\
+\delta(235) & \omega _{1345}                 & -\omega _{1245}               & -\omega _{1234}               \\
+\delta(245) & -\omega _{1345}                & \omega _{1235}                &             0                 \\
+\delta(345) & -\omega _{2345}+\omega _{1345} &          0                    &             0                 \\
+    \end{block}
+  \end{blockarray}
+%     [Zero(field),   w1245,          w1234-w1235],
+%     [Zero(field),   -w1235,         w1235],
+%     [Zero(field),   w1235-w1245,    -w1234],
+%     [w2345,         Zero(field),    -w1235],
+%     [-w2345,        w1245,          w1234],
+%     [w2345,         -w1235,         Zero(field)],
+%     [-w1345,        Zero(field),    w1235],
+%     [w1345,         -w1245,         -w1234],
+%     [-w1345,        w1235,          Zero(field)],
+%     [-w2345+w1345,  Zero(field),    Zero(field)]
+\end{equation}
+
+These coordinates work for a generic~$\omega$. To be exact, it can be checked that matrix~\eqref{v12345} has rank $<3$ in the only case where
+\begin{equation}\label{l3}
+\omega _{1345} = \omega _{2345},
+\end{equation}
+keeping \eqref{onv} in mind, of course. If we add, however, the ``missing'' seven columns to~\eqref{v12345}, so that they will correspond to \emph{all} ten triangles---2-faces of our~$\Delta^4$, the rank will, remarkably, be three for \emph{any}~$\omega$ satisfying~\eqref{onv}, as the following proposition states.
+
+\begin{proposition}\label{p:Qr}
+$Q_{\Delta^4}$, considered as a bilinear form on~$V_{\Delta^4}$, has the full rank---that is, three.
+\end{proposition}
+
+\begin{proof}
+If the rank of $Q_{\Delta^4}$ were less than~3, then not only~\eqref{l3}, but also other similar relations would hold, with other subscripts. This would lead to a contradiction between~\eqref{onv} and the cocycle condition $\omega _{1234}-\omega _{1235}+\omega _{1245}-\omega _{1345}+\omega _{2345}=0$.
+\end{proof}
+
+Due to Propositions \ref{p:Q} and~\ref{p:Qr}, there is the canonical isomorphism between~$V_{\Delta^4}$ and its conjugate space~$V_{\Delta^4}^*$, this latter consisting of course of linear forms on 3-cocycles vanishing on~$\omega$.
+
+\subsection{Recalling the explicit expressions for 5-cocycles in characteristics two and three}
+
+The value of the 5-cocycle in characteristic two on a 5-simplex~$w$ can be expressed as
+\begin{equation}\label{h2}
+ c(\nu, \eta) =
+ \sum _{\substack{v,v'\subset w\\ v < v'}} Q_v(\nu, \eta) Q_{v'}(\nu, \eta)
+ +\sum _{v\subset w} \tilde{\epsilon}_v^{(w)} \bigl( Q_v(\nu, \eta) \bigr)^2,
+\end{equation}
+where $v$ and~$v'$ are faces of~$w$. We assume in~\eqref{h2} that these faces are \emph{numbered}, and understand their numbers when writing ``\,$v < v'$\,''.
+
+In characteristic three:
+\begin{equation}\label{h3}
+\sum _{\substack{v_1,v_2,v_3\subset w\\ v_1 < v_2 < v_3}} \epsilon _{v_1}^{(w)} \epsilon _{v_2}^{(w)} \epsilon _{v_3}^{(w)}\, Q_{v_1}(\nu, \eta)\, Q_{v_2}(\nu, \eta)\, Q_{v_3}(\nu, \eta),
+\end{equation}
+where $v_1$, $v_2$ and~$v_3$ are faces of~$w$.
+
+
+
+\section{Manifold: cells, coboundaries, cohomology}\label{s:M}
+
+\subsection{Function \texttt{ei( M, m, mp1\_cell, m\_cell )}}
+
+For manifold \texttt{M}, returns the incidence coefficient $=0$ or $\pm 1$ between the $(\texttt{m}+1)$-simplex with number \texttt{mp1\_cell} and \texttt{m}-simplex with number \texttt{m\_cell}.
+
+\subsection{Function \texttt{coboundary( M, addr )}}
+
+\texttt{M} is a manifold, and \texttt{addr} must be a two-component list 
+\[
+\texttt{addr} = [\,m-1,\; \text{the number of }(m-1)\text{-simplex}\,]
+\]
+The function returns the coboundary of an $(m-1)$-simplex in manifold \texttt{M} in the form of the list of the same length as \texttt{M.faces[$m$]}---that is, the number of $m$-faces---where at each place the incidence coefficient stays between the corresponding $m$-face and the $(m-1)$-face determined according to \texttt{addr}.
+
+\subsection{Function \texttt{basis\_cohomology( M, field, n )}}
+
+Returns a basis in the space of \texttt{n}-cohomologies of manifold \texttt{M} with coefficients in \texttt{field}, in the form of a list of \texttt{n}-cocycles representing the basis cohomology classes. Each \texttt{n}-cocycle is represented as a list of \texttt{field}-valued coefficients at \texttt{n}-cells.
+
+\subsection{Function \texttt{PolTriangulatedOrient( M )}}
+
+For a triangulated manifold \texttt{M}, returns consistent orientations $\pm 1$ of its cells of the maximal dimension. Orientations are taken with respect to the orientations determined by the vertices of each cell taken in their increasing order.
+
+
+
+\section{Heptagon colorings of a manifold}\label{s:mc}
+
+\subsection{Function \texttt{evt( M, triangle, pentachoron, cocycle )}}
+
+For a given \texttt{triangle} ( = 2-face) we take simplicial 3-cocycle equal to the coboundary of the delta-function of that \texttt{triangle}. That is, the cochain taking value 1 on that \texttt{triangle} and 0 on the others.
+We fix a basis in each 3-dimensional space of permitted colorings for a given \texttt{pentachoron} ( = 4-face), determined by the \texttt{cocycle}~$\omega$, according to \eqref{v12345}. Function \texttt{evt} substitutes right vertex numbers instead of 12345 in~\eqref{v12345}, and returns the 3-row-vector of components of the (permitted) coloring of the \texttt{pentachoron} appearing due to that 3-\texttt{cocycle}. Zero of course if \texttt{triangle} is not a face of \texttt{pentachoron}.
+
+\texttt{M} is a triangulated manifold.
+
+
+\subsection{Function \texttt{e( M, g\_simplex, cocycle )}}
+Here n=3, hence 2*n-2=4. Function e returns the list of 3-row-vectors (made by evt) for all 4-faces.
+
+
+\subsection{Function \texttt{all\_e( M, cocycle )}}
+Given are manifold M and cocycle omega. Function \texttt{all\_e} returns matrix whose rows correspond to triangles, while each row is as returned by \texttt{e} with the only difference that all the inner square brackets are removed. That is, each triple of columns corresponds to a 4-face.
+
+
+\subsection{Function \texttt{colorings( M, cocycle )}}
+Here $k=3$. 
+And within it:
+ \paragraph{Inner function \texttt{r\_d\_s\_g( d\_simplex )}}
+ What we do: the rows of \texttt{on\_d\_simplex} give a basis of permitted colorings of a given \texttt{d\_simplex}, that is, 5-simplex. Then we make matrix r of orthogonal \emph{rows}. Then we make matrix m which is matrix r with zeroes added at the places corresponding to other 5-simplices (not our given \texttt{d\_simplex}).
+\texttt{r\_all\_result} is the matrix made of such \texttt{m = r\_d\_s\_g(t)} for all 5-simplices as \texttt{d\_simplex}, by placing them one under another. The rows of \texttt{r\_all\_result} give this way all restrictions on permitted colorings of $M$.
+No more problems: \texttt{colorings.g} gives a basis of linear space $V_r$, while \texttt{colorings.p} gives a basis of linear space $V_p$.
+
+
+
+\section{Heptagon cocycles}\label{s:hc}
+
+\subsection{Function \texttt{gran( M, cocycle, pentachoron, x, y )}}
+
+\texttt{gran} means, in principle, ``face''. 
+
+Here, specifically, the value of bilinear form $Q$~\eqref{bf4} is returned on chosen a 4-face, namely, \texttt{pentachoron}. Arguments \texttt{x} and \texttt{y} are two permitted colorings of manifold \texttt{M} ($\nu$ and $\eta$ in \eqref{bf4} are their restrictions on the \texttt{pentachoron}~$\Delta^4$) given in the same format as the \emph{rows} of the output of function \texttt{all\_e}: each triple of columns corresponds to a 4-face.
+
+\subsection{Function \texttt{on\_d( M, cocycle, d\_simplex, x, y )}}
+
+This function is not actually used in calculations; it is just to check that the previous function \texttt{gran} gave indeed a 4-cocycle. Function \texttt{on\_d} takes a 5-simplex \texttt{d\_simplex} and sums the values of~$Q$ along its 4-faces, with proper signs. Some permitted colorings \texttt{x} and \texttt{y} must be supplied as arguments (in the same format as in function \texttt{gran}).
+
+\subsection{Function \texttt{on\_d\_2( M, cocycle, d\_simplex, x, y )}}
+
+This function calculates the value~\eqref{h2} of 5-cochain in characteristic two on \texttt{d\_simplex}
+
+\subsection{Function \texttt{on\_d\_3( M, cocycle, d\_simplex, x, y )}}
+
+This function calculates the value~\eqref{h3} of 5-cochain in characteristic three on \texttt{d\_simplex}
+
+
+
+\section{Calculations}\label{s:calc}
+
+The calculations are done for 3-cocycle~$\omega$ being an $\mathbb F_2$-cocycle (this is important!) plus a coboundary whose components belong to a big enough finite field~$F$ of characteristic two. Vector spaces $V_p$ and~$V_g$ are taken over~$F$.
+
+Concerning characteristic three, no nontrivial results could be obtained as yet, so our calculations go just in characteristic two.
+
+\subsection{Function \texttt{itogi\_function( )}: returned values}
+
+This function returns the list of lists \texttt{[ vektor, subset\_V\_p\_V\_g, d\_V\_p, d\_V\_g, sum\_sumsum, sum, rank\_A ]} of the function's local variables. Of these,
+\begin{itemize}
+ \item \texttt{vektor} runs, essentially, over all third cohomology classes of~$M$ with coefficients in $\mathbb F_2$, starting from the zero class. To be exact, \texttt{vektor} shows the coordinates of the class in some basis,
+ \item \texttt{subset\_V\_p\_V\_g} is a technical Boolean variable serving just to check that the inclusion of vector spaces $V_g \subset V_p$ holds indeed (so it looks like the calculations go right),
+ \item \texttt{d\_V\_p} is $\dim V_p$ ---the dimension of the space of permitted colorings of~$M$,
+ \item \texttt{d\_V\_g} is $\dim V_g$ ---the dimension of the space of g-colorings of~$M$,
+ \item \texttt{sum\_sumsum} is one more technical Boolean variable showing whether the \texttt{sum} calculated in two ways (and called \texttt{sumsum} in one of its versions) fives the same result, where
+ \item \texttt{sum} is the polynomial of two permitted colorings from which our invariant comes out. It turns out to be, in all our examples, a symmetric bilinear form of the \emph{squares} of coordinates of the two permitted colorings $\nu$ and~$\eta$ of~$M$,
+ \item \texttt{rank\_A} is the rank of that symmetric bilinear form.
+\end{itemize}
+
+\subsection{Function \texttt{itogi\_function( )}: inner variables}
+
+\begin{itemize}
+ \item \texttt{basis\_p} consists of permitted colorings whose equivalence classes modulo g-colorings form a basis in $V_p / V_g$,
+ \item \texttt{u} and \texttt{v} are lists of \texttt{field}-valued coefficients with which we make linear combinations of the vectors from \texttt{basis\_p}, see next item,
+ \item \texttt{x} and \texttt{y} are these linear combinations for \texttt{u} and \texttt{v}, respectively. They are what is denoted $\nu$ and $\eta$ in the paper,
+ \item \texttt{sum} is $I(M,\omega)$ from the paper. Remember that $\omega$ is determined by the above \texttt(vektor),
+ \item \texttt{U} and \texttt{V} are \emph{not} actually needed for calculations, and stay here just for control. They are lists of coefficients that can be placed at the basis vectors of $V_g$, see next item,
+ \item \texttt{xx} and \texttt{yy} are the vectors \texttt{x} and \texttt{y} to which linear combinations of three basis vectors of $V_g$ are added, whose coefficients are indeterminates from lists \texttt{U} and \texttt{V}, respectively,
+ \item \texttt{sumsum} is like \texttt{sum} but calculated with \texttt{xx} and \texttt{yy}. These sums must be equal, and this is controled by the Boolean variable \texttt{sum\_sumsum}. Remark: in simple cases, like $M=S^2\times S^3$, \texttt{sum\_sumsum} may return \texttt{false}, because both sums are zero, but GAP thinks that they belong to different fields (\texttt{GF(2)} and \texttt{<field in characteristic 2>}, respectively). This brings about no difficulties,
+ \item \texttt{A} is the matrix of the symmetric bilinear form \texttt{sum} of the \emph{squares} of variables in \texttt{x} and \texttt{y}. Because, looking at \texttt{sum}, we see that it has exactly such form in all our examples.
+\end{itemize}
+
+\subsection{Integer cohomology}
+
+Sometimes it may make sense to obtain a description of cocycles~$\omega$, like we did for $M = \mathbb RP^4 \times S^1$. We did that by calculating the cohomology with coefficients in~$\mathbb Z$, reducing the obtained cocycle $\mod 2$, and comparing with each of the four cocycles~$\omega$. Here is the relevant GAP function:
+ 
+\begin{verbatim}
+basis_cohomology_integers := function( M, field, n )
+ local coboundaries, mat, cocycles, f, bas;
+ coboundaries := FreeLeftModule( Integers, 
+  List([1..Length(M.faces[n-1])], 
+  nm1_cell -> coboundary(M,[n-1,nm1_cell]) ) );
+ mat := List([1..Length(M.faces[n])], n_cell -> 
+     coboundary(M,[n,n_cell]) );
+ cocycles := FreeLeftModule( Integers, NullspaceIntMat( mat ) );
+ f:= NaturalHomomorphismBySubspace( cocycles, coboundaries );
+ bas := Basis(cocycles/coboundaries);
+ return List( bas, x -> PreImagesRepresentative( f, x )
+   # + Random( coboundaries )      # !!!
+    );
+end;
+\end{verbatim}
+
+
+
+\end{document}
+
